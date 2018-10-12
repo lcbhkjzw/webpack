@@ -1,3 +1,5 @@
+import { Dependency } from "./Dependency";
+
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
@@ -25,6 +27,12 @@ class DependenciesBlockVariable {
 		this.expression = expression;
 		this.dependencies = dependencies || [];
 	}
+
+	public name: string = "";
+
+	public expression: string = "";
+
+	public dependencies: Dependency[] = [];
 
 	/**
 	 * @param {Hash} hash hash for instance to update
@@ -69,4 +77,4 @@ class DependenciesBlockVariable {
 	}
 }
 
-module.exports = DependenciesBlockVariable;
+export { DependenciesBlockVariable };
