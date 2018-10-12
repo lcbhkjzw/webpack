@@ -48,6 +48,14 @@ class Dependency {
 		this.loc = undefined;
 	}
 
+	private module: Module = null;
+
+	private weak: boolean = false;
+
+	private optional: boolean = false;
+
+	private loc: Object = undefined;
+
 	getResourceIdentifier() {
 		return null;
 	}
@@ -78,6 +86,8 @@ class Dependency {
 	disconnect() {
 		this.module = null;
 	}
+
+	static compare = undefined;
 }
 
 // TODO remove in webpack 5
@@ -86,4 +96,4 @@ Dependency.compare = util.deprecate(
 	"Dependency.compare is deprecated and will be removed in the next major version"
 );
 
-module.exports = Dependency;
+export { Dependency };
