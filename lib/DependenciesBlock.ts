@@ -4,33 +4,18 @@
  */
 "use strict";
 
-const DependenciesBlockVariable = require("./DependenciesBlockVariable");
-
-/** @typedef {import("./ChunkGroup")} ChunkGroup */
-/** @typedef {import("./Dependency")} Dependency */
-/** @typedef {import("./AsyncDependenciesBlock")} AsyncDependenciesBlock */
-/** @typedef {import("./DependenciesBlockVariable")} DependenciesBlockVariable */
-/** @typedef {(d: Dependency) => boolean} DependencyFilterFunction */
-/** @typedef {import("./util/createHash").Hash} Hash */
+import { DependenciesBlockVariable } from "./DependenciesBlockVariable";
+import { AsyncDependenciesBlock } from "./AsyncDependenciesBlock";
+import { Dependency } from "./Dependency";
 
 class DependenciesBlock {
-	constructor() {
-		/** @type {Dependency[]} */
-		this.dependencies = [];
-		/** @type {AsyncDependenciesBlock[]} */
-		this.blocks = [];
-		/** @type {DependenciesBlockVariable[]} */
-		this.variables = [];
-	}
+	constructor() {}
 
-	/**
-	 * Adds a DependencyBlock to DependencyBlock relationship.
-	 * This is used for when a Module has a AsyncDependencyBlock tie (for code-splitting)
-	 *
-	 * @param {AsyncDependenciesBlock} block block being added
-	 * @returns {void}
-	 */
-	addBlock(block) {
+	private dependencies: Dependency[] = [];
+	private blocks: DependenciesBlock[] = [];
+	private variables: DependenciesBlockVariable[] = [];
+
+	public addBlock(block: AsyncDependenciesBlock): void {
 		this.blocks.push(block);
 		block.parent = this;
 	}
@@ -41,7 +26,11 @@ class DependenciesBlock {
 	 * @param {Dependency[]} dependencies dependency instances tied to variable
 	 * @returns {void}
 	 */
-	addVariable(name, expression, dependencies) {
+	public addVariable(
+		name: string,
+		expression: string,
+		dependencies: Dependency[]
+	): void {
 		for (let v of this.variables) {
 			if (v.name === name && v.expression === expression) {
 				return;
@@ -57,7 +46,7 @@ class DependenciesBlock {
 	 * This is an "edge" pointing to another "node" on module graph.
 	 * @returns {void}
 	 */
-	addDependency(dependency) {
+	public addDependency(dependency: Dependency): void {
 		this.dependencies.push(dependency);
 	}
 
@@ -65,7 +54,7 @@ class DependenciesBlock {
 	 * @param {Dependency} dependency dependency being removed
 	 * @returns {void}
 	 */
-	removeDependency(dependency) {
+	public removeDependency(dependency: Dependency) {
 		const idx = this.dependencies.indexOf(dependency);
 		if (idx >= 0) {
 			this.dependencies.splice(idx, 1);
@@ -76,19 +65,19 @@ class DependenciesBlock {
 	 * @param {Hash} hash the hash used to track dependencies
 	 * @returns {void}
 	 */
-	updateHash(hash) {
+	public updateHash(hash): void {
 		for (const dep of this.dependencies) dep.updateHash(hash);
 		for (const block of this.blocks) block.updateHash(hash);
 		for (const variable of this.variables) variable.updateHash(hash);
 	}
 
-	disconnect() {
+	public disconnect() {
 		for (const dep of this.dependencies) dep.disconnect();
 		for (const block of this.blocks) block.disconnect();
 		for (const variable of this.variables) variable.disconnect();
 	}
 
-	unseal() {
+	public unseal() {
 		for (const block of this.blocks) block.unseal();
 	}
 
@@ -96,7 +85,7 @@ class DependenciesBlock {
 	 * @param {DependencyFilterFunction} filter filter function for dependencies, gets passed all dependency ties from current instance
 	 * @returns {boolean} returns boolean for filter
 	 */
-	hasDependencies(filter) {
+	public hasDependencies(filter) {
 		if (filter) {
 			for (const dep of this.dependencies) {
 				if (filter(dep)) return true;
@@ -116,9 +105,9 @@ class DependenciesBlock {
 		return false;
 	}
 
-	sortItems() {
+	public sortItems() {
 		for (const block of this.blocks) block.sortItems();
 	}
 }
 
-module.exports = DependenciesBlock;
+export { DependenciesBlock };
