@@ -4,7 +4,8 @@
 */
 "use strict";
 
-const DependenciesBlock = require("./DependenciesBlock");
+import { DependenciesBlock } from "./DependenciesBlock";
+import { ChunkGroup } from "./ChunkGroup";
 
 /** @typedef {import("./ChunkGroup")} ChunkGroup */
 /** @typedef {import("./Module")} Module */
@@ -12,7 +13,7 @@ const DependenciesBlock = require("./DependenciesBlock");
 /** @typedef {import("./util/createHash").Hash} Hash */
 /** @typedef {TODO} GroupOptions */
 
-module.exports = class AsyncDependenciesBlock extends DependenciesBlock {
+export class AsyncDependenciesBlock extends DependenciesBlock {
 	/**
 	 * @param {GroupOptions} groupOptions options for the group
 	 * @param {Module} module the Module object
@@ -33,8 +34,21 @@ module.exports = class AsyncDependenciesBlock extends DependenciesBlock {
 		this.loc = loc;
 		this.request = request;
 		/** @type {DependenciesBlock} */
-		this.parent = undefined;
 	}
+
+	private groupOptions: {
+		name: string;
+	} = undefined;
+
+	private chunkGroup: ChunkGroup = undefined;
+
+	private module = undefined;
+
+	private loc = undefined;
+
+	private request = undefined;
+
+	public parent = undefined;
 
 	/**
 	 * @returns {string} The name of the chunk
@@ -71,7 +85,7 @@ module.exports = class AsyncDependenciesBlock extends DependenciesBlock {
 	 * @param {Hash} hash the hash used to track block changes, from "crypto" module
 	 * @returns {void}
 	 */
-	updateHash(hash) {
+	public updateHash(hash): void {
 		hash.update(JSON.stringify(this.groupOptions));
 		hash.update(
 			(this.chunkGroup &&
@@ -88,7 +102,7 @@ module.exports = class AsyncDependenciesBlock extends DependenciesBlock {
 	/**
 	 * @returns {void}
 	 */
-	disconnect() {
+	public disconnect(): void {
 		this.chunkGroup = undefined;
 		super.disconnect();
 	}
@@ -96,7 +110,7 @@ module.exports = class AsyncDependenciesBlock extends DependenciesBlock {
 	/**
 	 * @returns {void}
 	 */
-	unseal() {
+	public unseal(): void {
 		this.chunkGroup = undefined;
 		super.unseal();
 	}
@@ -104,7 +118,7 @@ module.exports = class AsyncDependenciesBlock extends DependenciesBlock {
 	/**
 	 * @returns {void}
 	 */
-	sortItems() {
+	public sortItems(): void {
 		super.sortItems();
 	}
-};
+}
