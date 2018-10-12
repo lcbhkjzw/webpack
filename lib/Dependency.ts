@@ -35,7 +35,7 @@ const DependencyReference = require("./dependencies/DependencyReference");
 
 /** @typedef {SynteticDependencyLocation|RealDependencyLocation} DependencyLocation */
 
-class Dependency {
+abstract class Dependency {
 	constructor() {
 		/** @type {Module|null} */
 		this.module = null;
