@@ -80,4 +80,4 @@ class RequestShortener {
 	}
 }
 
-module.exports = RequestShortener;
+export default RequestShortener;

@@ -9,7 +9,7 @@ class WebpackError extends Error {
 	 * Creates an instance of WebpackError.
 	 * @param {string=} message error message
 	 */
-	constructor(message) {
+	constructor(message?: string) {
 		super(message);
 
 		this.details = undefined;
@@ -21,9 +21,15 @@ class WebpackError extends Error {
 		Error.captureStackTrace(this, this.constructor);
 	}
 
+	protected details: string;
+	protected missing: string;
+	protected origin: string;
+	protected dependencies: string;
+	protected module: string;
+
 	inspect() {
 		return this.stack + (this.details ? `\n${this.details}` : "");
 	}
 }
 
-module.exports = WebpackError;
+export default WebpackError;

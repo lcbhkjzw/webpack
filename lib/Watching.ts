@@ -4,11 +4,12 @@
 */
 "use strict";
 
-const Stats = require("./Stats");
+import Stats from "./Stats";
+
+export type WatchOptions = number | Object;
 
 class Watching {
-	constructor(compiler, watchOptions, handler) {
-		this.startTime = null;
+	constructor(compiler, watchOptions: WatchOptions, handler) {
 		this.invalid = false;
 		this.handler = handler;
 		this.callbacks = [];
@@ -32,6 +33,10 @@ class Watching {
 			this._go();
 		});
 	}
+
+	private startTime: number = null;
+
+	private watchOptions: WatchOptions;
 
 	_go() {
 		this.startTime = Date.now();
@@ -191,4 +196,5 @@ class Watching {
 	}
 }
 
-module.exports = Watching;
+export default Watching;
+export { WatchOptions };

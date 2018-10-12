@@ -30,6 +30,10 @@ class Stats {
 		this.endTime = undefined;
 	}
 
+	public startTime: number;
+
+	public endTime: number;
+
 	static filterWarnings(warnings, warningsFilter) {
 		// we dont have anything to filter so all warnings can be shown
 		if (!warningsFilter) {
@@ -1432,4 +1436,4 @@ class Stats {
 	}
 }
 
-module.exports = Stats;
+export default Stats;

@@ -1,3 +1,5 @@
+import { Chunk } from "./Chunk";
+
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
@@ -77,6 +79,8 @@ class ChunkGroup {
 		/** @private @type {Map<Module, number>} */
 		this._moduleIndicies2 = new Map();
 	}
+
+	public chunks: Chunk[] = [];
 
 	/**
 	 * when a new chunk is added to a chunkGroup, addingOptions will occur.
@@ -514,4 +518,4 @@ class ChunkGroup {
 	}
 }
 
-module.exports = ChunkGroup;
+export { ChunkGroup };

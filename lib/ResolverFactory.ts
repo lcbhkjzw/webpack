@@ -7,7 +7,7 @@
 const { Tapable, HookMap, SyncHook, SyncWaterfallHook } = require("tapable");
 const Factory = require("enhanced-resolve").ResolverFactory;
 
-module.exports = class ResolverFactory extends Tapable {
+export default class ResolverFactory extends Tapable {
 	constructor() {
 		super();
 		this.hooks = {
@@ -61,4 +61,4 @@ module.exports = class ResolverFactory extends Tapable {
 		this.hooks.resolver.for(type).call(resolver, resolveOptions);
 		return resolver;
 	}
-};
+}

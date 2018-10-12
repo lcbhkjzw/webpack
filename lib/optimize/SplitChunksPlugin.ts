@@ -100,10 +100,12 @@ const INITIAL_CHUNK_FILTER = chunk => chunk.canBeInitial();
 const ASYNC_CHUNK_FILTER = chunk => !chunk.canBeInitial();
 const ALL_CHUNK_FILTER = chunk => true;
 
-module.exports = class SplitChunksPlugin {
+export default class SplitChunksPlugin {
 	constructor(options) {
 		this.options = SplitChunksPlugin.normalizeOptions(options);
 	}
+
+	private options = undefined;
 
 	static normalizeOptions(options = {}) {
 		return {

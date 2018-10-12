@@ -1,4 +1,5 @@
 import { Dependency } from "./Dependency";
+import { Hash } from "crypto";
 
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
@@ -22,7 +23,7 @@ class DependenciesBlockVariable {
 	 * @param {string} expression expression string
 	 * @param {Dependency[]=} dependencies dependencies tied to this varaiable
 	 */
-	constructor(name, expression, dependencies) {
+	constructor(name: string, expression:string, dependencies: Dependency[]) {
 		this.name = name;
 		this.expression = expression;
 		this.dependencies = dependencies || [];
@@ -38,7 +39,7 @@ class DependenciesBlockVariable {
 	 * @param {Hash} hash hash for instance to update
 	 * @returns {void}
 	 */
-	updateHash(hash) {
+	updateHash(hash: Hash) {
 		hash.update(this.name);
 		hash.update(this.expression);
 		for (const d of this.dependencies) {
@@ -69,7 +70,7 @@ class DependenciesBlockVariable {
 		}
 	}
 
-	hasDependencies(filter) {
+	hasDependencies(filter: () => boolean) {
 		if (filter) {
 			return this.dependencies.some(filter);
 		}

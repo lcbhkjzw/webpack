@@ -143,6 +143,10 @@ class Chunk {
 		this.removedModules = undefined;
 	}
 
+	public id = null;
+
+	public name: string = "";
+
 	/**
 	 * @deprecated Chunk.entry has been deprecated. Please use .hasRuntime() instead
 	 * @returns {never} Throws an error trying to access this property
@@ -830,4 +834,4 @@ Object.defineProperty(Chunk.prototype, "entrypoints", {
 	}
 });
 
-module.exports = Chunk;
+export { Chunk };

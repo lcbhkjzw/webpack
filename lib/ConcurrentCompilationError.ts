@@ -4,16 +4,17 @@
 */
 "use strict";
 
-const WebpackError = require("./WebpackError");
+import WebpackError from "./WebpackError";
 
-module.exports = class ConcurrentCompilationError extends WebpackError {
+export default class ConcurrentCompilationError extends WebpackError {
 	constructor() {
 		super();
 
-		this.name = "ConcurrentCompilationError";
-		this.message =
-			"You ran Webpack twice. Each instance only supports a single concurrent compilation at a time.";
-
 		Error.captureStackTrace(this, this.constructor);
 	}
-};
+
+	public name = "ConcurrentCompilationError";
+
+	public message =
+		"You ran Webpack twice. Each instance only supports a single concurrent compilation at a time.";
+}

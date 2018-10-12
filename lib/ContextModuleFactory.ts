@@ -19,7 +19,7 @@ const ContextElementDependency = require("./dependencies/ContextElementDependenc
 
 const EMPTY_RESOLVE_OPTIONS = {};
 
-module.exports = class ContextModuleFactory extends Tapable {
+export default class ContextModuleFactory extends Tapable {
 	constructor(resolverFactory) {
 		super();
 		this.hooks = {
@@ -259,4 +259,4 @@ module.exports = class ContextModuleFactory extends Tapable {
 
 		addDirectory(resource, callback);
 	}
-};
+}

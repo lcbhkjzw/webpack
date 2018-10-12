@@ -1,3 +1,5 @@
+import Compiler from "./Compiler";
+
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
@@ -204,7 +206,7 @@ class Compilation extends Tapable {
 	 * Creates an instance of Compilation.
 	 * @param {Compiler} compiler the compiler which created the compilation
 	 */
-	constructor(compiler) {
+	constructor(compiler: Compiler) {
 		super();
 		this.hooks = {
 			/** @type {SyncHook<Module>} */
@@ -476,6 +478,8 @@ class Compilation extends Tapable {
 		/** @private @type {Map<Module, Callback[]>} */
 		this._rebuildingModules = new Map();
 	}
+
+	public compilationDependencies: Set<string>;
 
 	getStats() {
 		return new Stats(this);
@@ -2407,7 +2411,7 @@ class Compilation extends Tapable {
 	 * @param {TODO=} data // TODO: figure out this param type
 	 * @returns {string} interpolated path
 	 */
-	getPath(filename, data) {
+	getPath(filename: string, data?: any) {
 		data = data || {};
 		data.hash = data.hash || this.hash;
 		return this.mainTemplate.getAssetPath(filename, data);
@@ -2510,4 +2514,8 @@ Object.defineProperty(Compilation.prototype, "moduleTemplate", {
 	)
 });
 
-module.exports = Compilation;
+export default Compilation;
+
+export interface CompilationParams {
+	compilationDependencies: Compilation["compilationDependencies"];
+}

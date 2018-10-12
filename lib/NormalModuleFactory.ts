@@ -523,4 +523,4 @@ class NormalModuleFactory extends Tapable {
 	}
 }
 
-module.exports = NormalModuleFactory;
+export default NormalModuleFactory;

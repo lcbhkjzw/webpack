@@ -51,4 +51,4 @@ class Entrypoint extends ChunkGroup {
 	}
 }
 
-module.exports = Entrypoint;
+export default Entrypoint;

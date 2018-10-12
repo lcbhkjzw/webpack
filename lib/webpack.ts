@@ -1,15 +1,21 @@
+import Stats from "./Stats";
+import { Configuration } from "./declaration";
+
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
 */
 "use strict";
 
-const Compiler = require("./Compiler");
+import Compiler from "./Compiler";
 const WebEnvironmentPlugin = require("./web/WebEnvironmentPlugin");
 const WebpackOptionsApply = require("./WebpackOptionsApply");
 const WebpackOptionsDefaulter = require("./WebpackOptionsDefaulter");
 
-const webpack = (options, callback) => {
+const webpack = (
+	options: Configuration,
+	callback: (err: Error, stats: Stats) => void
+) => {
 	new WebpackOptionsDefaulter().process(options);
 
 	const compiler = new Compiler();
