@@ -4,7 +4,8 @@
 */
 "use strict";
 
-const { Tapable, SyncWaterfallHook, SyncHook } = require("tapable");
+import { Tapable, SyncWaterfallHook, SyncHook } from "tapable";
+import { Configuration } from "./declaration";
 
 /** @typedef {import("./ModuleTemplate")} ModuleTemplate */
 /** @typedef {import("./Chunk")} Chunk */
@@ -22,30 +23,33 @@ const { Tapable, SyncWaterfallHook, SyncHook } = require("tapable");
  * @property {Map<TODO, TODO>} dependencyTemplates
  */
 
-module.exports = class ChunkTemplate extends Tapable {
-	constructor(outputOptions) {
+export default class ChunkTemplate extends Tapable {
+	constructor(outputOptions: Configuration["outputOptions"]) {
 		super();
 		this.outputOptions = outputOptions || {};
-		this.hooks = {
-			/** @type {SyncWaterfallHook<TODO[], RenderManifestOptions>} */
-			renderManifest: new SyncWaterfallHook(["result", "options"]),
-			modules: new SyncWaterfallHook([
-				"source",
-				"chunk",
-				"moduleTemplate",
-				"dependencyTemplates"
-			]),
-			render: new SyncWaterfallHook([
-				"source",
-				"chunk",
-				"moduleTemplate",
-				"dependencyTemplates"
-			]),
-			renderWithEntry: new SyncWaterfallHook(["source", "chunk"]),
-			hash: new SyncHook(["hash"]),
-			hashForChunk: new SyncHook(["hash", "chunk"])
-		};
 	}
+
+	public outputOptions: Configuration["outputOptions"];
+
+	public hooks = {
+		/** @type {SyncWaterfallHook<TODO[], RenderManifestOptions>} */
+		renderManifest: new SyncWaterfallHook(["result", "options"]),
+		modules: new SyncWaterfallHook([
+			"source",
+			"chunk",
+			"moduleTemplate",
+			"dependencyTemplates"
+		]),
+		render: new SyncWaterfallHook([
+			"source",
+			"chunk",
+			"moduleTemplate",
+			"dependencyTemplates"
+		]),
+		renderWithEntry: new SyncWaterfallHook(["source", "chunk"]),
+		hash: new SyncHook(["hash"]),
+		hashForChunk: new SyncHook(["hash", "chunk"])
+	};
 
 	/**
 	 *
@@ -84,4 +88,4 @@ module.exports = class ChunkTemplate extends Tapable {
 		this.updateHash(hash);
 		this.hooks.hashForChunk.call(hash, chunk);
 	}
-};
+}

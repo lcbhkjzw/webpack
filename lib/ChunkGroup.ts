@@ -518,4 +518,4 @@ class ChunkGroup {
 	}
 }
 
-export { ChunkGroup };
+export default ChunkGroup;

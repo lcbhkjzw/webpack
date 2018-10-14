@@ -4,7 +4,7 @@
 */
 "use strict";
 
-const fs = require("fs");
+import fs from "fs";
 const path = require("path");
 const mkdirp = require("mkdirp");
 
@@ -17,6 +17,8 @@ class NodeOutputFileSystem {
 		this.writeFile = fs.writeFile.bind(fs);
 		this.join = path.join.bind(path);
 	}
+
+	private mkdirp: any;
 }
 
-module.exports = NodeOutputFileSystem;
+export default NodeOutputFileSystem;

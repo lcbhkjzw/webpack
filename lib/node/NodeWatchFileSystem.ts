@@ -4,7 +4,7 @@
 */
 "use strict";
 
-const Watchpack = require("watchpack");
+import Watchpack from "watchpack";
 const objectToMap = require("../util/objectToMap");
 
 class NodeWatchFileSystem {
